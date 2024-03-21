@@ -1,0 +1,48 @@
+.AdminStudent__section{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #fff;
+  
+  }
+  .AdminStudent__container{
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    max-width: 700px;
+    width: 100%;
+    margin: auto;
+    background-color: #690202;
+  }
+  .AdminStudent__logo{
+    margin-left: 1.7rem;
+    margin-top: 10rem;
+    width: 40rem;
+    display: block;
+    margin-right: 3rem;
+    
+  
+  }
+  .AdminStudent__btn {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 35vh;
+    width: 100%;
+    margin: auto;
+    gap: 2rem;
+    margin-left: .2rem;
+  }
+  .AdminStudent__btn a {
+    width: 150px;
+    height: 50px;
+    background-color: #E1AC00;
+    color: white;
+    border-radius: 5px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+  }

@@ -1,0 +1,24 @@
+/* StudentProfile.css */
+.student-profile {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 20px 0;
+    background-color: #f9f9f9;
+  }
+  
+  .profile-heading {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .profile-details {
+    font-size: 18px;
+  }
+  
+  .profile-details p {
+    margin: 5px 0;
+  }
+  
+  /* You can add more styles as needed */
+  
