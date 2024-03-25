@@ -120,7 +120,7 @@ const AdminAnnouncements = () => {
   return (
     <div className="admin-announcements">
       <h2>All Announcements</h2>
-      {announcements.map((announcement) => (
+      {announcements.slice().reverse().map((announcement)=> (
         <div key={announcement.announcementID} className="announcement">
           {announcement.image ? (
             <div className="announcement-with-image">

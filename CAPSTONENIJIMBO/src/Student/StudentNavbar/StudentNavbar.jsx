@@ -10,7 +10,7 @@ const StudentNavbar = () => {
   const studentID = location.pathname.split('/')[3]; // Ex
   return (
     <nav className='Snav'>
-        <Link to="/Student/Homepage" className='nav__logo'>
+        <Link to={`/Student/Homepage/${studentID}`} className='nav__logo'>
               <img src={Logo} alt='Navbar Logo'/>
             </Link>
             <div className='menu' onClick={() => {

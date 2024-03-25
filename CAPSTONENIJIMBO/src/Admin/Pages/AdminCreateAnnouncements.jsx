@@ -8,11 +8,17 @@ function AdminCreateAnnouncements() {
   const [description, setDescription] = useState('');
   const [image, setImage] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
-
+  const [date, setDate] = useState('');
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
   };
 
+  const handleDate = (event) =>{
+    const date = new Date(event.target.value);
+    const formattedDate = date.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+    console.log(formattedDate)
+    setDate(formattedDate);
+  }
   const handleDescriptionChange = (event) => {
     setDescription(event.target.value);
   };
@@ -29,6 +35,7 @@ function AdminCreateAnnouncements() {
       formData.append('title', title);
       formData.append('description', description);
       formData.append('image', image);
+      formData.append('date', date);
       formData.append('adminID', adminID); // Static adminID
 
       const response = await axios.post(
@@ -58,6 +65,10 @@ function AdminCreateAnnouncements() {
         <div>
           <label>Title:</label>
           <input type="text" value={title} onChange={handleTitleChange} required />
+        </div>
+        <div>
+          <label>Date:</label>
+          <input type="date" value={date} onChange={handleDate} required/>
         </div>
         <div>
           <label>Description:</label>

@@ -19,6 +19,8 @@ import StudentArticles from './Student/pages/StudentArticles.jsx';
 import StudentFaQs from './Student/pages/StudentFaQs.jsx';
 import StudentProfile from './Student/pages/StudentProfile.jsx';
 import { StudentProvider } from './Student/pages/StudentContext.jsx';
+import AdminCreateEvent from './Admin/Pages/AdminCreateEvent.jsx'
+import AssignTeachersToEvent from './Admin/Pages/AssignTeachersToEvent.jsx'
 function App() {
   return (
     <StudentProvider>
@@ -40,6 +42,8 @@ function App() {
               <Route path='/Articles/:adminID' element={<AdminArticles />} />
               <Route path='/Teachers/:adminID' element={<AdminTeachers />} />
               <Route path='/CreateAnnouncement/:adminID' element={<AdminCreateAnnouncements />}/>
+              <Route path='/CreateEvent/:adminID' element={<AdminCreateEvent />}/>
+              <Route path='/AssignTeachers/:adminID' element={<AssignTeachersToEvent />}/>
             </Routes>
           </>
         } />

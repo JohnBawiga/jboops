@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -77,6 +78,7 @@ public class AnnouncementController {
     public ResponseEntity<AnnouncementEntity> createAnnouncement(
             @RequestParam("title") String title,
             @RequestParam("description") String description,
+            @RequestParam("date") Date date,
             @RequestParam(value = "image", required = false) MultipartFile image,
             @RequestParam("adminID") Long adminID) {
         try {
@@ -84,6 +86,7 @@ public class AnnouncementController {
             AnnouncementEntity announcement = new AnnouncementEntity();
             announcement.setTitle(title);
             announcement.setDescription(description);
+            announcement.setDate(date);
             announcement.setAdminID(adminID);
 
             // If image is provided, set it
