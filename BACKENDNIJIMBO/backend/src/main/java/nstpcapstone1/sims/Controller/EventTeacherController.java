@@ -17,7 +17,7 @@ import nstpcapstone1.sims.Repository.EventTeacherRepository;
 import nstpcapstone1.sims.Service.EventTeacherService;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin(origins="*")
 public class EventTeacherController {
 
     private final EventTeacherService eventTeacherService;

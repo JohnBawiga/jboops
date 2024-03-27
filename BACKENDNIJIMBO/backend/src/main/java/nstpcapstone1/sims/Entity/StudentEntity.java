@@ -1,10 +1,14 @@
 package nstpcapstone1.sims.Entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,6 +28,9 @@ public class StudentEntity {
     private String email;
     private String password;
 
+    @OneToMany(mappedBy = "student")
+    private Set<EventStudentEntity> eventStudents = new HashSet<>();
+    
     public StudentEntity() {
 
     }

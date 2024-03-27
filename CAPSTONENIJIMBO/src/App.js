@@ -21,48 +21,54 @@ import StudentProfile from './Student/pages/StudentProfile.jsx';
 import { StudentProvider } from './Student/pages/StudentContext.jsx';
 import AdminCreateEvent from './Admin/Pages/AdminCreateEvent.jsx'
 import AssignTeachersToEvent from './Admin/Pages/AssignTeachersToEvent.jsx'
+import AdminAddStudent from './Admin/Pages/AdminAddStudent.jsx'
+import { AuthProvider } from './zLandingpage/AuthProvider..jsx';
+
 function App() {
   return (
-    <StudentProvider>
-    <Router>
-      <Routes>
-        <Route path='/' element={<AdminStudent />} />
-        <Route path='/Admin/Login' element={<AdminLogin />} />
-        <Route path='/Admin/Signup' element={<AdminSignup />} />
-        <Route path='/Student/Login' element={<StudentLogin />} />
-        <Route path='/Student/Signup' element={<StudentSignup />} />
-        
-        <Route path='/Admin/*' element={
-          <>
-            <AdminNavbar/>
-            <Routes>
-              <Route path='/Dashboard/:adminID' element={<AdminDashboards />} />
-              <Route path='/Announcements/:adminID' element={<AdminAnnouncements />} />
-              <Route path='/Events/:adminID' element={<AdminEvents />} />
-              <Route path='/Articles/:adminID' element={<AdminArticles />} />
-              <Route path='/Teachers/:adminID' element={<AdminTeachers />} />
-              <Route path='/CreateAnnouncement/:adminID' element={<AdminCreateAnnouncements />}/>
-              <Route path='/CreateEvent/:adminID' element={<AdminCreateEvent />}/>
-              <Route path='/AssignTeachers/:adminID' element={<AssignTeachersToEvent />}/>
-            </Routes>
-          </>
-        } />
-        
-        <Route path='/Student/*' element={
-          <>
-            <StudentNavbar/>
-            <Routes>
-              <Route path='/Homepage/:studentID' element={<StudentHomepage />} />
-              <Route path='/Events/:studentID' element={<StudentEvents />} />
-              <Route path='/Articles/:studentID' element={<StudentArticles />} />
-              <Route path='/FaQs/:studentID' element={<StudentFaQs />} />
-              <Route path='/Profile/:studentID' element={<StudentProfile />} />
-            </Routes>
-          </>
-        } />
-      </Routes>
-    </Router>
-    </StudentProvider>
+    <AuthProvider> {/* Wrap the entire application with AuthProvider */}
+      <StudentProvider>
+        <Router>
+          <Routes>
+            <Route path='/' element={<AdminStudent />} />
+            <Route path='/Admin/Login' element={<AdminLogin />} />
+            <Route path='/Admin/Signup' element={<AdminSignup />} />
+            <Route path='/Student/Login' element={<StudentLogin />} />
+            <Route path='/Student/Signup' element={<StudentSignup />} />
+            
+            <Route path='/Admin/*' element={
+              <>
+                <AdminNavbar/>
+                <Routes>
+                  <Route path='/Dashboard/:adminID' element={<AdminDashboards />} />
+                  <Route path='/Announcements/:adminID' element={<AdminAnnouncements />} />
+                  <Route path='/Events/:adminID' element={<AdminEvents />} />
+                  <Route path='/Articles/:adminID' element={<AdminArticles />} />
+                  <Route path='/Teachers/:adminID' element={<AdminTeachers />} />
+                  <Route path='/CreateAnnouncement/:adminID' element={<AdminCreateAnnouncements />}/>
+                  <Route path='/CreateEvent/:adminID' element={<AdminCreateEvent />}/>
+                  <Route path='/AssignTeachers/:adminID' element={<AssignTeachersToEvent />}/>
+                  <Route path='/AddStudent/:adminID' element={<AdminAddStudent />}/>
+                </Routes>
+              </>
+            } />
+            
+            <Route path='/Student/*' element={
+              <>
+                <StudentNavbar/>
+                <Routes>
+                  <Route path='/Homepage/:studentID' element={<StudentHomepage />} />
+                  <Route path='/Events/:studentID' element={<StudentEvents />} />
+                  <Route path='/Articles/:studentID' element={<StudentArticles />} />
+                  <Route path='/FaQs/:studentID' element={<StudentFaQs />} />
+                  <Route path='/Profile/:studentID' element={<StudentProfile />} />
+                </Routes>
+              </>
+            } />
+          </Routes>
+        </Router>
+      </StudentProvider>
+    </AuthProvider>
   );
 }
 

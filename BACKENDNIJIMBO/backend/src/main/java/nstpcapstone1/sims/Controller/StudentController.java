@@ -1,5 +1,7 @@
 package nstpcapstone1.sims.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import nstpcapstone1.sims.Entity.StudentEntity;
+import nstpcapstone1.sims.Entity.TeacherEntity;
 import nstpcapstone1.sims.Repository.StudentRepository;
 import nstpcapstone1.sims.Service.StudentService;
 
@@ -57,5 +60,9 @@ public class StudentController {
 	        } else {
 	            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	        }
+	    }
+	   @GetMapping("/getAllStudents")
+	    public List<StudentEntity> getAllStudents() {
+	        return studentService.getAllStudents();
 	    }
 }

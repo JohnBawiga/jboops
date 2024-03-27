@@ -1,5 +1,7 @@
 package nstpcapstone1.sims.Service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +25,9 @@ public class StudentService {
             return studentRepository.findByStudentID(studentID);
         else
             return null;
+    }
+    
+    public List<StudentEntity> getAllStudents() {
+        return studentRepository.findAll();
     }
 }
