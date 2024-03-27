@@ -18,16 +18,12 @@ import StudentEvents from './Student/pages/StudentEvents.jsx';
 import StudentArticles from './Student/pages/StudentArticles.jsx';
 import StudentFaQs from './Student/pages/StudentFaQs.jsx';
 import StudentProfile from './Student/pages/StudentProfile.jsx';
-import { StudentProvider } from './Student/pages/StudentContext.jsx';
 import AdminCreateEvent from './Admin/Pages/AdminCreateEvent.jsx'
 import AssignTeachersToEvent from './Admin/Pages/AssignTeachersToEvent.jsx'
 import AdminAddStudent from './Admin/Pages/AdminAddStudent.jsx'
-import { AuthProvider } from './zLandingpage/AuthProvider..jsx';
 
 function App() {
   return (
-    <AuthProvider> {/* Wrap the entire application with AuthProvider */}
-      <StudentProvider>
         <Router>
           <Routes>
             <Route path='/' element={<AdminStudent />} />
@@ -67,8 +63,6 @@ function App() {
             } />
           </Routes>
         </Router>
-      </StudentProvider>
-    </AuthProvider>
   );
 }
 

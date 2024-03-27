@@ -38,10 +38,18 @@ public class EventTeacherController {
             e.printStackTrace();
             return "Failed to assign teacher to event";
         }
-    }
+    }	
     @GetMapping("/event/{eventId}")
     public ResponseEntity<List<EventTeacherEntity>> getByEventId(@PathVariable Long eventId) {
         List<EventTeacherEntity> eventTeachers = eventTeacherRepository.findByEventEventID(eventId);
+        if (eventTeachers.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(eventTeachers, HttpStatus.OK);
+    }
+    @GetMapping("/teacherevents/{userid}")
+    public ResponseEntity<List<EventTeacherEntity>> getByUserId(@PathVariable Long userid) {
+        List<EventTeacherEntity> eventTeachers = eventTeacherRepository.findByTeacherUserid(userid);
         if (eventTeachers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

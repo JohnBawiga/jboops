@@ -14,7 +14,7 @@ const AdminEvents = () => {
 
   useEffect(() => {
     // Fetch events from backend API
-    axios.get('http://localhost:8080/getEvents')
+    axios.get('http://localhost:8080/getEvents')  
       .then(response => {
         setEvents(response.data);
       })

@@ -10,4 +10,6 @@ import java.util.List;
 
 public interface EventTeacherRepository extends JpaRepository<EventTeacherEntity, Long> {
     List<EventTeacherEntity> findByEventEventID(Long eventId);
+    List<EventTeacherEntity> findByTeacherUserid(Long userid);
+
 }

@@ -31,6 +31,9 @@ public class TeacherEntity {
     @OneToMany(mappedBy = "teacher")
     private Set<EventTeacherEntity> eventTeachers = new HashSet<>();
     
+    @OneToMany(mappedBy = "teacher")
+    private Set<StudentTeacherEntity> studentTeachers = new HashSet<>();
+    
     public TeacherEntity(){
     	
     }
