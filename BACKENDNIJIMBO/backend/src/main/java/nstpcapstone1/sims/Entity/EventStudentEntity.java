@@ -24,36 +24,46 @@ public class EventStudentEntity {
     @JoinColumn(name = "student_id")
     private StudentEntity student;
 
+    private boolean isRegistered;
+
     public EventStudentEntity() {
     }
 
-    public EventStudentEntity(EventEntity event, StudentEntity student) {
+    public EventStudentEntity(EventEntity event, StudentEntity student, boolean isRegistered) {
         this.event = event;
+        this.student = student;
+        this.isRegistered = isRegistered;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public EventEntity getEvent() {
+        return event;
+    }
+
+    public void setEvent(EventEntity event) {
+        this.event = event;
+    }
+
+    public StudentEntity getStudent() {
+        return student;
+    }
+
+    public void setStudent(StudentEntity student) {
         this.student = student;
     }
 
-	public Long getId() {
-		return id;
-	}
+    public boolean isRegistered() {
+        return isRegistered;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public EventEntity getEvent() {
-		return event;
-	}
-
-	public void setEvent(EventEntity event) {
-		this.event = event;
-	}
-
-	public StudentEntity getStudent() {
-		return student;
-	}
-
-	public void setStudent(StudentEntity student) {
-		this.student = student;
-	}
-
+    public void setRegistered(boolean registered) {
+        isRegistered = registered;
+    }
 }

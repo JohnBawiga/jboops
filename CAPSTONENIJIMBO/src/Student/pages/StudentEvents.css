@@ -1,0 +1,29 @@
+.teacher-events-container {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .events-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .event-item {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+  }
+  
+  .event-item p {
+    margin: 0;
+  }
+  
+  .event-item p:first-child {
+    margin-top: 0;
+    font-weight: bold;
+  }
