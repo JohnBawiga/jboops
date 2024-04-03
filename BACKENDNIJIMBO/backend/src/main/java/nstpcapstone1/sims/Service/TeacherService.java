@@ -28,6 +28,20 @@ public class TeacherService {
 	        return teacherRepository.findAll();
 	    }
 	   
-	   
+	    public TeacherEntity signupTeacher(TeacherEntity teacherEntity) {
+	    	if (teacherRepository.existsByEmail(teacherEntity.getEmail())) {
+	            throw new RuntimeException("Email is already registered");
+	        }
+
+	        // Check if teacher ID is unique
+	        if (teacherRepository.existsByTeacherID(teacherEntity.getTeacherID())) {
+	            throw new RuntimeException("Teacher ID is already registered");
+	        }
+	        
+	        return teacherRepository.save(teacherEntity);
+	    }
+	    public TeacherEntity findByTeacherID(String teacherID) {
+	        return teacherRepository.findByTeacherID(teacherID);
+	    }
     
 }

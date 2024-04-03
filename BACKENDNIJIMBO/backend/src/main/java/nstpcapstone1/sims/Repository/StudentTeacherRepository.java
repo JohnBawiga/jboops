@@ -12,6 +12,7 @@ import java.util.List;
 public interface StudentTeacherRepository extends JpaRepository<StudentTeacherEntity, Long> {
     List<StudentTeacherEntity> findByStudentStudentID(String studentID);
     StudentTeacherEntity findByStudent_StudentID(String studentID);
+    StudentTeacherEntity findByTeacher_Userid(Long userid);
 
 
 }

@@ -17,6 +17,7 @@ import nstpcapstone1.sims.Entity.TeacherEntity;
 import nstpcapstone1.sims.Repository.StudentRepository;
 import nstpcapstone1.sims.Repository.StudentTeacherRepository;
 import nstpcapstone1.sims.Repository.TeacherRepository;
+import nstpcapstone1.sims.Service.StudentTeacherService;
 
 import java.util.List;
 
@@ -27,11 +28,12 @@ public class StudentTeacherController {
     private final StudentTeacherRepository studentTeacherRepository;
     private final StudentRepository studentRepository;
     private final TeacherRepository teacherRepository;
-    
-    public StudentTeacherController(StudentTeacherRepository studentTeacherRepository, StudentRepository studentRepository,TeacherRepository teacherRepository) {
+    private final StudentTeacherService studentTeacherService;
+    public StudentTeacherController(StudentTeacherRepository studentTeacherRepository, StudentRepository studentRepository,TeacherRepository teacherRepository, StudentTeacherService studentTeacherService) {
         this.studentTeacherRepository = studentTeacherRepository;
         this.studentRepository = studentRepository;
         this.teacherRepository = teacherRepository;
+        this.studentTeacherService = studentTeacherService;
     }
 
     @GetMapping("/teacherstudent/{studentID}")
@@ -84,6 +86,15 @@ public class StudentTeacherController {
             }
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error updating teacher: " + e.getMessage());
+        }
+    }
+    @GetMapping("/byteacherid/{userid}")
+    public ResponseEntity<StudentTeacherEntity> getByTeacherId(@PathVariable Long userid) {
+        StudentTeacherEntity studentTeacherEntity = studentTeacherService.getByTeacherId(userid);
+        if (studentTeacherEntity != null) {
+            return new ResponseEntity<>(studentTeacherEntity, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 }

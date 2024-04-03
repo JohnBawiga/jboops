@@ -12,5 +12,7 @@ import nstpcapstone1.sims.Entity.TeacherEntity;
 @Repository
 public interface TeacherRepository extends JpaRepository<TeacherEntity, Long> {
 	TeacherEntity findByUserid(Long userid);
-
+	 boolean existsByEmail(String email);
+	 boolean existsByTeacherID(String teacherID);
+	 TeacherEntity findByTeacherID(String teacherID);
 }

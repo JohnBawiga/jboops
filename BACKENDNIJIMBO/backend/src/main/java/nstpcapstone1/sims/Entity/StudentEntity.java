@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -27,6 +28,10 @@ public class StudentEntity {
     private String course;
     private String email;
     private String password;
+    @Lob
+    @Column(nullable = true, columnDefinition = "LONGBLOB")
+
+    private byte[] profile; // Store the image as byte[]
 
     @OneToMany(mappedBy = "student")
     private Set<EventStudentEntity> eventStudents = new HashSet<>();
@@ -38,7 +43,7 @@ public class StudentEntity {
     }
 
     public StudentEntity(Long userid, String studentID, String firstName, String lastName, String course, String email,
-            String password) {
+            String password, byte[] profile) {
         super();
         this.userid = userid;
         this.studentID = studentID;
@@ -47,6 +52,7 @@ public class StudentEntity {
         this.course = course;
         this.email = email;
         this.password = password;
+        this.profile=profile;
     }
 
     public Long getUserid() {
@@ -103,5 +109,11 @@ public class StudentEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    public byte[] getProfile() {
+    	return profile;
+    }
+    public void setProfile(byte[] profile) {
+    	this.profile=profile;
     }
 }

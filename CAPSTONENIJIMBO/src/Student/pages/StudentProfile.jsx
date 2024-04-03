@@ -102,11 +102,12 @@ const StudentProfile = () => {
           <div className="modal-overlay">
             <div className="modal">
               <h3>QR Code for Student ID</h3>
-              <QRCode value={student.studentID} />
+              <QRCode value={studentID} />
               <button onClick={closeModal}>Close</button>
             </div>
           </div>
         )}
+        
         <p><strong>Student ID:</strong> {student.studentID}</p>
         <p><strong>Name:</strong> {student.firstName} {student.lastName}</p>
         <p><strong>Email:</strong> {student.email}</p>
