@@ -32,9 +32,10 @@ const TeacherLogin = () => {
 
   return (
     <div>
-      <div class="splitL leftL">
+      <div >
   <div class="centeredL">
   <div className="forms-container">
+    <h1>Teacher</h1>
         <div className="signin">
           <form action="#" className="sign-in-form" onSubmit={handleLogin}>
             <h2 className="title">Log in</h2>
@@ -68,17 +69,7 @@ const TeacherLogin = () => {
   </div>
 </div>
 
-<div class="split rightL">
-  <div class="centeredL">
-  <img src={Logo} alt="logo" />
-  <p>
-        The NSTP is a program aimed at enhancing civic consciousness and defense preparedness in the youth by developing the ethics of service and patriotism while undergoing training in any of its program components. Under the NSTP law, state universities are required to offer ROTC and at least one other NSTP component.
-     </p>
-    <button className="btnL transparent1" id="sign-up-btn">
-      <Link to="/Teacher/Signup" className='link'>Sign Up</Link>
-    </button>
-  </div>
-</div>
+
     </div>
   );
 }

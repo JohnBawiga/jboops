@@ -1,6 +1,7 @@
 package nstpcapstone1.sims.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,5 +24,16 @@ public class EventStudentService {
     public void assignStudentToEvent(EventStudentEntity eventStudentEntity) {
         eventStudentRepository.save(eventStudentEntity);
     }
-    
+    public void save(EventStudentEntity eventStudentEntity) {
+        eventStudentRepository.save(eventStudentEntity);
+    }
+    public EventStudentEntity findById(Long id) {
+        Optional<EventStudentEntity> eventStudentOptional = eventStudentRepository.findById(id);
+        return eventStudentOptional.orElse(null);
+    }
+    public EventStudentEntity createEventStudent(EventStudentEntity eventStudentEntity) {
+        // Here you can perform any business logic/validation before saving to the database
+        // For simplicity, we'll directly call the repository to save the entity
+        return eventStudentRepository.save(eventStudentEntity);
+    }
 }

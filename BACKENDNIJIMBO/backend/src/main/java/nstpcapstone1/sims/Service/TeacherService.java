@@ -43,5 +43,12 @@ public class TeacherService {
 	    public TeacherEntity findByTeacherID(String teacherID) {
 	        return teacherRepository.findByTeacherID(teacherID);
 	    }
+	    public boolean emailExists(String email) {
+	        return teacherRepository.existsByEmail(email);
+	    }
+	    public boolean teacherIDExists(String teacherID) {
+	        return teacherRepository.existsByTeacherID(teacherID);
+	    }
+
     
 }

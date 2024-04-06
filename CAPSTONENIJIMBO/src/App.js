@@ -25,6 +25,7 @@
   import TeacherNavbar from './Teacher/Sidebar/TeacherNavbar.jsx';
   import TeacherEvents from './Teacher/pages/TeacherEvents.jsx';
   import TeacherAttendance from './Teacher/pages/TeacherAttendance.jsx';
+  import TeacherLogin from './zLandingpage/TeacherLogin.jsx'
   function App() {
     return (
           <Router>
@@ -34,6 +35,7 @@
               <Route path='/Admin/Signup' element={<AdminSignup />} />
               <Route path='/Student/Login' element={<StudentLogin />} />
               <Route path='/Student/Signup' element={<StudentSignup />} />
+              <Route path='Teacher/Login' element={<TeacherLogin/>}/>
               
               <Route path='/Admin/*' element={
                 <>
@@ -70,7 +72,7 @@
                 <TeacherNavbar/>
                 <Routes>
                   <Route path='/Events/:teacherID' element={<TeacherEvents />}/>
-                  <Route path='/Attendance/:teacherID' element={<TeacherAttendance/>} />
+                  <Route path='/Attendance/:teacherID/:eventID' element={<TeacherAttendance/>} />
                 </Routes>
                 </>
               }/>

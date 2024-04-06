@@ -31,12 +31,16 @@ public class StudentController {
     public ResponseEntity<String> signup(@RequestBody StudentEntity user) {
         // Check if the studentID already exists
         if (studentService.existsByStudentID(user.getStudentID())) {
-            return new ResponseEntity<>("StudentID already exists", HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("StudentID already exists");
         }
 
+     // Check if the email already exists
+        if (studentService.existsByEmail(user.getEmail())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email already exists");
+        }
         // Save the user if studentID is unique
         studentService.createUser(user);
-        return new ResponseEntity<>("User created successfully", HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully");
     }
 	
 	@GetMapping("/getByUserid")

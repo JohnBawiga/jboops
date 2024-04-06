@@ -88,6 +88,15 @@ public class TeacherController {
 	         @RequestParam(value = "profile", required = false) MultipartFile profileImage) {
 
 	     try {
+	         // Check if teacherID or email already exists
+	         if (teacherRepository.existsByTeacherID(teacherID)) {
+	             return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+	         }
+
+	         if (teacherRepository.existsByEmail(email)) {
+	             return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+	         }
+
 	         TeacherEntity teacherEntity = new TeacherEntity();
 	         teacherEntity.setTeacherID(teacherID);
 	         teacherEntity.setFirstName(firstName);
@@ -108,6 +117,7 @@ public class TeacherController {
 	         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	     }
 	 }
+
 	 @GetMapping("/teacherlogin")
 	    public ResponseEntity<Object> findByUserid(
 	            @RequestParam(name = "teacherID", required = false, defaultValue = "0") String teacherID,
@@ -131,4 +141,15 @@ public class TeacherController {
 	            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	        }
 	    }
+	 @GetMapping("/checkEmail/{email}")
+	 public ResponseEntity<Boolean> checkEmailExists(@PathVariable String email) {
+	     boolean exists = teacherService.emailExists(email);
+	     return ResponseEntity.ok(exists);
+	 }
+
+	 @GetMapping("/checkTeacherID/{teacherID}")
+	 public ResponseEntity<Boolean> checkTeacherIDExists(@PathVariable String teacherID) {
+	     boolean exists = teacherService.teacherIDExists(teacherID);
+	     return ResponseEntity.ok(exists);
+	 }
 }

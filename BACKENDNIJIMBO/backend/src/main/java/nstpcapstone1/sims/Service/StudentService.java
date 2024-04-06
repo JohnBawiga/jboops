@@ -26,7 +26,9 @@ public class StudentService {
         else
             return null;
     }
-    
+    public boolean existsByEmail(String email) {
+        return studentRepository.existsByEmail(email);
+    }
     public List<StudentEntity> getAllStudents() {
         return studentRepository.findAll();
     }

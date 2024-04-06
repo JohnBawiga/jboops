@@ -1,5 +1,7 @@
 package nstpcapstone1.sims.Entity;
 
+import java.util.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,45 +27,55 @@ public class EventStudentEntity {
     private StudentEntity student;
 
     private boolean isRegistered;
-
+    private Date timeIN;
+    private Date timeOUT;
     public EventStudentEntity() {
     }
+	public EventStudentEntity(Long id, EventEntity event, StudentEntity student, boolean isRegistered, Date timeIN,
+			Date timeOUT) {
+		super();
+		this.id = id;
+		this.event = event;
+		this.student = student;
+		this.isRegistered = isRegistered;
+		this.timeIN = timeIN;
+		this.timeOUT = timeOUT;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public EventEntity getEvent() {
+		return event;
+	}
+	public void setEvent(EventEntity event) {
+		this.event = event;
+	}
+	public StudentEntity getStudent() {
+		return student;
+	}
+	public void setStudent(StudentEntity student) {
+		this.student = student;
+	}
+	public boolean isRegistered() {
+		return isRegistered;
+	}
+	public void setRegistered(boolean isRegistered) {
+		this.isRegistered = isRegistered;
+	}
+	public Date getTimeIN() {
+		return timeIN;
+	}
+	public void setTimeIN(Date timeIN) {
+		this.timeIN = timeIN;
+	}
+	public Date getTimeOUT() {
+		return timeOUT;
+	}
+	public void setTimeOUT(Date timeOUT) {
+		this.timeOUT = timeOUT;
+	}
 
-    public EventStudentEntity(EventEntity event, StudentEntity student, boolean isRegistered) {
-        this.event = event;
-        this.student = student;
-        this.isRegistered = isRegistered;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public EventEntity getEvent() {
-        return event;
-    }
-
-    public void setEvent(EventEntity event) {
-        this.event = event;
-    }
-
-    public StudentEntity getStudent() {
-        return student;
-    }
-
-    public void setStudent(StudentEntity student) {
-        this.student = student;
-    }
-
-    public boolean isRegistered() {
-        return isRegistered;
-    }
-
-    public void setRegistered(boolean registered) {
-        isRegistered = registered;
-    }
 }

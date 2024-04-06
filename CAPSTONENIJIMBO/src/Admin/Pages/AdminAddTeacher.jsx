@@ -12,12 +12,31 @@ function AdminAddTeacher() {
         profile:null
       });
     
-      const handleChange = (e) => {
+       // Define state for email and teacherID existence checks
+    const [emailExists, setEmailExists] = useState(false);
+    const [teacherIDExists, setTeacherIDExists] = useState(false);
+      const handleChange = async (e) => {
         const { name, value } = e.target;
         setFormData(prevState => ({
           ...prevState,
           [name]: value
         }));
+      
+        if (name === 'email') {
+          try {
+            const response = await axios.get(`http://localhost:8080/checkEmail/${value}`);
+            setEmailExists(response.data);
+          } catch (error) {
+            console.error('Error checking email:', error);
+          }
+        } else if (name === 'teacherID') {
+          try {
+            const response = await axios.get(`http://localhost:8080/checkTeacherID/${value}`);
+            setTeacherIDExists(response.data);
+          } catch (error) {
+            console.error('Error checking teacherID:', error);
+          }
+        }
       };
       const handleFileChange = (e) => {
         setFormData(prevState => ({
@@ -30,6 +49,14 @@ function AdminAddTeacher() {
       const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+          if (emailExists) {
+            alert('Email already exists. Please choose different credentials.');
+            return;
+        }
+        if(teacherIDExists){
+          alert('Teacher ID already exists. Please choose different credentials.');
+          return;
+        }
           const formDataToSend = new FormData();
           formDataToSend.append('teacherID', formData.teacherID);
           formDataToSend.append('firstName', formData.firstName);

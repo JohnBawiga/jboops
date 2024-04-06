@@ -13,7 +13,7 @@ const AdminStudent = () => {
 
                 <div className='AdminStudent__btn'>
                   <Link to="/Student/Login">Login as Student</Link>
-                  <Link to="/Admin/Login">Login as Admin</Link>
+                  <Link to="/Teacher/Login">Login as Teacher</Link>
                 </div>
           </div>
         </div>
