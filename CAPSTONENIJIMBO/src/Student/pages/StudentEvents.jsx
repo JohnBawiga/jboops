@@ -114,24 +114,75 @@ function TeacherEvents() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
+  // Function to check if an event is ongoing
+  const isOngoing = (event) => {
+    const currentDate = new Date();
+    const eventStart = new Date(event.event.eventStart);
+    const eventEnd = new Date(event.event.eventEnd);
+    return currentDate >= eventStart && currentDate <= eventEnd;
+  };
+
+  // Function to check if an event is upcoming
+  const isUpcoming = (event) => {
+    const currentDate = new Date();
+    const eventStart = new Date(event.event.eventStart);
+    return currentDate < eventStart;
+  };
+
+  // Filter events based on status
+  const ongoingEvents = events.filter(isOngoing);
+  const upcomingEvents = events.filter(isUpcoming);
+  const completedEvents = events.filter(event => !isOngoing(event) && !isUpcoming(event));
+
   return (
     <div className="teacher-events-container"> {/* Apply container styling */}
       <h1>Events</h1>
-      <ul className="events-list"> {/* Apply list styling */}
-        {events.map((event) => (
-          <li key={event.id} className="event-item" onClick={() => openModal(event)}> {/* Apply item styling */}
-            <p><strong>Event ID:</strong> {event.event.eventID}</p> {/* Accessing nested property */}
-            <p><strong>Event Title:</strong> {event.event.eventTitle}</p>
-            <p><strong>Event Start:</strong> {event.event.eventStart}</p>
-            <p><strong>Event End:</strong> {event.event.eventEnd}</p>
-            {event.event.image && <p><img src={`data:image/png;base64,${event.event.image}`} alt={event.eventTitle} /></p>}
-            <p><strong>Description:</strong> {event.event.description}</p>
-            <p><strong>Teacher ID:</strong> {event.teacher.teacherID}</p> {/* Accessing nested property */}
-            <p><strong>Teacher Name:</strong> {event.teacher.firstName} {event.teacher.lastName}</p>
-            {/* Add more event and teacher details as needed */}
-          </li>
-        ))}
-      </ul>
+      
+      {/* Ongoing Events */}
+      <div className="events-section">
+        <h2>Ongoing Events - {ongoingEvents.length}</h2>
+        <div className="events-list">
+          {ongoingEvents.map((event) => (
+            <div key={event.id} className="event-card" onClick={() => openModal(event)}>
+             {event.event.image && <p><img src={`data:image/png;base64,${event.event.image}`} alt={event.eventTitle} /></p>}
+            <p><strong>{event.event.eventTitle}</strong> </p>
+            <p>{event.event.eventStart}</p>
+            <p>{event.event.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Upcoming Events */}
+      <div className="events-section">
+        <h2>Upcoming Events - {upcomingEvents.length}</h2>
+        <div className="events-list">
+          {upcomingEvents.map((event) => (
+            <div key={event.id} className="event-card" onClick={() => openModal(event)}>
+             {event.event.image && <p><img src={`data:image/png;base64,${event.event.image}`} alt={event.eventTitle} /></p>}
+            <p><strong>{event.event.eventTitle}</strong> </p>
+            <p>{event.event.eventStart}</p>
+            <p>{event.event.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Completed Events */}
+      <div className="events-section">
+        <h2>Completed Events - {completedEvents.length}</h2>
+        <div className="events-list">
+          {completedEvents.map((event) => (
+            <div key={event.id} className="event-card" onClick={() => openModal(event)}>
+              {event.event.image && <p><img src={`data:image/png;base64,${event.event.image}`} alt={event.eventTitle} /></p>}
+            <p><strong>{event.event.eventTitle}</strong> </p>
+            <p>{event.event.eventStart}</p>
+            <p>{event.event.description}</p>
+    
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* Modal */}
       {isModalOpen && (

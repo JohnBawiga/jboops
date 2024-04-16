@@ -77,7 +77,13 @@
                           <span className="close" onClick={() => setModalOpen(false)}>&times;</span>
                         
                           <h2>{selectedTeacher.firstName} {selectedTeacher.lastName}</h2>
+                          <div class="image">
+        <div class="circle-1"></div>
+        <div class="circle-2"></div>
+        
+      
                           <img src={`data:image/png;base64,${selectedTeacher.profile}`} alt={selectedTeacher.firstName} />
+                          </div>
                           <p>Teacher ID: {selectedTeacher.teacherID}</p>
                           <p>Email: {selectedTeacher.email} </p>
                           <p>Assigned Year: {selectedTeacher.assignedYear}</p>
