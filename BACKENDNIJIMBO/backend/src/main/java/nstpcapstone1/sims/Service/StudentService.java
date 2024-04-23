@@ -32,4 +32,13 @@ public class StudentService {
     public List<StudentEntity> getAllStudents() {
         return studentRepository.findAll();
     }
+    public boolean updateProfilePicture(String studentID, byte[] profilePicture) {
+        StudentEntity student = studentRepository.findByStudentID(studentID);
+        if (student != null) {
+            student.setProfile(profilePicture);
+            studentRepository.save(student);
+            return true;
+        }
+        return false;
+    }
 }

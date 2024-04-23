@@ -1,5 +1,6 @@
 package nstpcapstone1.sims.Controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import nstpcapstone1.sims.Entity.StudentEntity;
 import nstpcapstone1.sims.Entity.TeacherEntity;
@@ -34,7 +37,7 @@ public class StudentController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("StudentID already exists");
         }
 
-     // Check if the email already exists
+        // Check if the email already exists
         if (studentService.existsByEmail(user.getEmail())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email already exists");
         }
@@ -69,4 +72,22 @@ public class StudentController {
 	    public List<StudentEntity> getAllStudents() {
 	        return studentService.getAllStudents();
 	    }
+	   @PutMapping("/addpicture/{studentID}")
+	   public ResponseEntity<String> updateProfilePicture(
+	           @PathVariable("studentID") String studentID,
+	           @RequestParam("profile") MultipartFile profile) {
+
+	       try {
+	           byte[] profilePictureBytes = profile.getBytes(); // Convert MultipartFile to byte[]
+	           boolean updated = studentService.updateProfilePicture(studentID, profilePictureBytes);
+	           if (updated) {
+	               return ResponseEntity.ok("Profile picture updated successfully");
+	           } else {
+	               return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Student not found");
+	           }
+	       } catch (IOException e) {
+	           e.printStackTrace();
+	           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing profile picture");
+	       }
+	   }
 }
