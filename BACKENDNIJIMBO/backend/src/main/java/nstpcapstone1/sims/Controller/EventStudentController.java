@@ -1,6 +1,7 @@
 package nstpcapstone1.sims.Controller;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import nstpcapstone1.sims.Entity.EventEntity;
+
 import nstpcapstone1.sims.Entity.EventStudentEntity;
-import nstpcapstone1.sims.Entity.StudentEntity;
 import nstpcapstone1.sims.Repository.EventStudentRepository;
 import nstpcapstone1.sims.Service.EventStudentService;
 
@@ -72,6 +72,37 @@ public class EventStudentController{
 	    public ResponseEntity<List<EventStudentEntity>> getAllEventStudents() {
 	        List<EventStudentEntity> eventStudents = eventStudentRepository.findAll();
 	        return new ResponseEntity<>(eventStudents, HttpStatus.OK);
+	    }
+	    
+	    @GetMapping("/getstatus/{userid}")
+	    public ResponseEntity<List<EventStudentEntity>> getByUserId(@PathVariable Long userid) {
+	        List<EventStudentEntity> eventStudents = eventStudentRepository.findByStudentUserid(userid);
+	        if (eventStudents.isEmpty()) {
+	            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	        }
+	        return new ResponseEntity<>(eventStudents, HttpStatus.OK);
+	    }
+	   
+	    @PostMapping("/{eventId}/{studentId}/update-time")
+	    public ResponseEntity<String> updateTimeInAndOut(@PathVariable("eventId") Long eventId, 
+	                                                      @PathVariable("studentId") Long studentId) {
+	        EventStudentEntity eventStudent = eventStudentService.findByEventIdAndStudentId(eventId, studentId);
+
+	        if (eventStudent == null) {
+	            return new ResponseEntity<>("Event student with event ID " + eventId + " and student ID " + studentId + " not found", HttpStatus.NOT_FOUND);
+	        }
+
+	        if (eventStudent.getTimeIN() == null) {
+	            // If there's no time in yet, update timeIN
+	            eventStudent.setTimeIN(new Date());
+	            eventStudentService.save(eventStudent);
+	            return new ResponseEntity<>("Time in updated successfully", HttpStatus.OK);
+	        } else {
+	            // If there's already a time in, update timeOUT
+	            eventStudent.setTimeOUT(new Date());
+	            eventStudentService.save(eventStudent);
+	            return new ResponseEntity<>("Time out updated successfully", HttpStatus.OK);
+	        }
 	    }
 	    
 }

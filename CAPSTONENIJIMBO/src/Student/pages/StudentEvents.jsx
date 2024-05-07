@@ -5,12 +5,13 @@ import './StudentEvents.css'; // Import CSS file for styling
 
 function TeacherEvents() {
   const { studentID } = useParams();
-  const [student, setStudent]=useState(null);
+  const [student, setStudent] = useState(null);
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null); // State to store selected event
   const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
+  const [filter, setFilter] = useState('all'); // State to manage event filtering
 
   // Function to fetch events based on teacher's user ID
   const fetchEvents = async (userId) => {
@@ -59,8 +60,14 @@ function TeacherEvents() {
 
   // Function to open modal and set selected event
   const openModal = (event) => {
-    setSelectedEvent(event);
-    setIsModalOpen(true);
+    // Check if the clicked event is ongoing or upcoming
+    if (isOngoing(event) || isUpcoming(event)) {
+      setSelectedEvent(event);
+      setIsModalOpen(true);
+    } else {
+      // Optionally, you can provide feedback to the user that only ongoing or upcoming events can be clicked
+      alert("Only ongoing or upcoming events can be clicked.");
+    }
   };
 
   // Function to close modal
@@ -83,12 +90,12 @@ function TeacherEvents() {
           description: selectedEvent.event.description
         },
         student: {
-          userid: student.userid, 
-          studentID: student.studentID, 
-          firstName: student.firstName, 
-          lastName:student.lastName, 
-          course: student.course, 
-          email: student.email, 
+          userid: student.userid,
+          studentID: student.studentID,
+          firstName: student.firstName,
+          lastName: student.lastName,
+          course: student.course,
+          email: student.email,
           password: student.password,
           profile: student.profile
         },
@@ -96,11 +103,11 @@ function TeacherEvents() {
         timeOUT: null,
         registered: true
       };
-  
+
       console.log(registrationData);
       // Make POST request to register for the event
       const response = await axios.post('http://localhost:8080/createStudentEvent', registrationData);
-      
+
       // Handle successful registration
       console.log('Successfully registered for the event:', response.data);
       // You can add further actions after successful registration, such as updating UI or showing a success message
@@ -129,59 +136,44 @@ function TeacherEvents() {
     return currentDate < eventStart;
   };
 
-  // Filter events based on status
-  const ongoingEvents = events.filter(isOngoing);
-  const upcomingEvents = events.filter(isUpcoming);
-  const completedEvents = events.filter(event => !isOngoing(event) && !isUpcoming(event));
+  // Function to check if an event is completed
+  const isCompleted = (event) => {
+    const currentDate = new Date();
+    const eventEnd = new Date(event.event.eventEnd);
+    return currentDate > eventEnd;
+  };
+
+  let filteredEvents = events;
+  if (filter === 'ongoing') {
+    filteredEvents = events.filter(isOngoing);
+  } else if (filter === 'upcoming') {
+    filteredEvents = events.filter(isUpcoming);
+  } else if (filter === 'completed') {
+    filteredEvents = events.filter(isCompleted);
+  }
 
   return (
     <div className="teacher-events-container"> {/* Apply container styling */}
       <h1>Events</h1>
-      
-      {/* Ongoing Events */}
-      <div className="events-section">
-        <h2>Ongoing Events - {ongoingEvents.length}</h2>
-        <div className="events-list">
-          {ongoingEvents.map((event) => (
-            <div key={event.id} className="event-card" onClick={() => openModal(event)}>
-             {event.event.image && <p><img src={`data:image/png;base64,${event.event.image}`} alt={event.eventTitle} /></p>}
-            <p><strong>{event.event.eventTitle}</strong> </p>
-            <p>{event.event.eventStart}</p>
-            <p>{event.event.description}</p>
-            </div>
-          ))}
-        </div>
+
+      {/* Filter buttons */}
+      <div className="filter-buttons">
+        <button onClick={() => setFilter('all')}>All Events</button>
+        <button onClick={() => setFilter('ongoing')}>Ongoing Events</button>
+        <button onClick={() => setFilter('upcoming')}>Upcoming Events</button>
+        <button onClick={() => setFilter('completed')}>Completed Events</button>
       </div>
 
-      {/* Upcoming Events */}
-      <div className="events-section">
-        <h2>Upcoming Events - {upcomingEvents.length}</h2>
-        <div className="events-list">
-          {upcomingEvents.map((event) => (
-            <div key={event.id} className="event-card" onClick={() => openModal(event)}>
-             {event.event.image && <p><img src={`data:image/png;base64,${event.event.image}`} alt={event.eventTitle} /></p>}
-            <p><strong>{event.event.eventTitle}</strong> </p>
+      {/* Events list */}
+      <div className="events-list">
+        {filteredEvents.map((event) => (
+          <div key={event.id} className="event-card" onClick={() => openModal(event)}>
+            {event.event.image && <p><img src={`data:image/png;base64,${event.event.image}`} alt={event.eventTitle} /></p>}
+            <p><strong>{event.event.eventTitle}</strong></p>
             <p>{event.event.eventStart}</p>
             <p>{event.event.description}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Completed Events */}
-      <div className="events-section">
-        <h2>Completed Events - {completedEvents.length}</h2>
-        <div className="events-list">
-          {completedEvents.map((event) => (
-            <div key={event.id} className="event-card" onClick={() => openModal(event)}>
-              {event.event.image && <p><img src={`data:image/png;base64,${event.event.image}`} alt={event.eventTitle} /></p>}
-            <p><strong>{event.event.eventTitle}</strong> </p>
-            <p>{event.event.eventStart}</p>
-            <p>{event.event.description}</p>
-    
-            </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
 
       {/* Modal */}
@@ -196,7 +188,6 @@ function TeacherEvents() {
             {selectedEvent.event.image && <p><img src={`data:image/png;base64,${selectedEvent.event.image}`} alt={selectedEvent.event.eventTitle} /></p>}
             <p><strong>Description:</strong> {selectedEvent.event.description}</p>
             <p><strong>Teacher Name:</strong> {selectedEvent.teacher.firstName} {selectedEvent.teacher.lastName}</p>
-            {/* Add more event and teacher details as needed */}
             <button onClick={registerForEvent}>Register</button>
           </div>
         </div>

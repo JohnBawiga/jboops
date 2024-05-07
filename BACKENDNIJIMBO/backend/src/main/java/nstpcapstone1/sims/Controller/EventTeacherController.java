@@ -48,7 +48,7 @@ public class EventTeacherController {
         }
         return new ResponseEntity<>(eventTeachers, HttpStatus.OK);
     }
-    @GetMapping("/teacherevents/{userid}")
+    @GetMapping("/teacherevents123/{userid}")
     public ResponseEntity<List<EventTeacherEntity>> getByUserId(@PathVariable Long userid) {
         List<EventTeacherEntity> eventTeachers = eventTeacherRepository.findByTeacherUserid(userid);
         if (eventTeachers.isEmpty()) {

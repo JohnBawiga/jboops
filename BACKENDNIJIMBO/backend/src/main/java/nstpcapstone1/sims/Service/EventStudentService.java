@@ -36,4 +36,13 @@ public class EventStudentService {
         // For simplicity, we'll directly call the repository to save the entity
         return eventStudentRepository.save(eventStudentEntity);
     }
+    
+    public EventStudentEntity findByEventIdAndStudentId(Long eventId, Long studentId) {
+        Optional<EventStudentEntity> eventStudentOptional = eventStudentRepository.findByEventEventIDAndStudentUserid(eventId, studentId);
+        return eventStudentOptional.orElse(null);
+    }
+
+   
+
+	
 }
